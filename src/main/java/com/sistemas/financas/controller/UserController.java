@@ -17,8 +17,8 @@ public class UserController {
     public @ResponseBody String metodo1 () {
         return "<html><head></head><body>" +
                 "<h1>Olá</h1>" +
-                "<a href=" + '"' + "localhost:9090/usuario/todos" + '"' + ">Listar Usuários</a><br/>" +
-                "<a href=\"localhost:9090/usuario/add\" >Adicionar Novo Usuário</a>" +
+                "<a href=" + '"' + "/usuario/todos" + '"' + ">Listar Usuários</a><br/>" +
+                "<a href=\"/usuario/add\" >Adicionar Novo Usuário</a>" +
                 "</body></html>" ;
     }
 
