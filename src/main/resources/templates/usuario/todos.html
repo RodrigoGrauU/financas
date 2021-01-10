@@ -9,15 +9,51 @@
     <tr>
         <td>Nome</td>
         <td>E-mail</td>
+        <td></td>
     </tr>
 
     <tr th:each="user : ${usuarios}">
         <td th:text="${user.name}"></td>
         <td th:text="${user.email}"></td>
+        <td><button th:attr="onclick='removerElemento(\'' + ${user.id} + '\');'">Remover</button></td>
     </tr>
 </table>
 
 <br />
 <a th:href="@{/usuario/add}"> Adicionar Usuário</a>
+
+<script type="text/javascript">
+    function removerElemento(element) {
+        var opcao = window.confirm("Tem certeza que deseja remover o elemento?");
+
+        if(opcao===true) {
+            removerElementoAJAX(element);
+        } else {
+            alert("Elemento não removido");
+        }
+    }
+
+    function removerElementoAJAX(idUser) {
+        var httpRequest;
+        if (window.XMLHttpRequest) { // Mozilla, Safari, ...
+            req = new XMLHttpRequest();
+            req.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  alert("A requisição foi feita com sucesso!");
+                }
+
+                if(this.readyState == 4) {
+                    alert("Voltou a parada");
+                }
+            };
+            req.open("GET", "localhost:9090/usuario/remover?id=" + idUser + "",true);
+            req.send();
+        }
+
+
+    }
+
+
+</script>
 </body>
 </html>
