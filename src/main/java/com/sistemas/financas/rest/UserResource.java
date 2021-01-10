@@ -18,4 +18,10 @@ public class UserResource {
     public Usuario addNewUser(@RequestBody Usuario usuario) {
         return userService.save(usuario);
     }
+
+    @PostMapping(path = "/api/usuario/delete")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeUser(@RequestBody Usuario usuario) {
+        userService.deleteById(usuario.getId());
+    }
 }

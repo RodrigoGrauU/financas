@@ -12,7 +12,7 @@
         <td></td>
     </tr>
 
-    <tr th:each="user : ${usuarios}">
+    <tr th:each="user : ${usuarios}" th:id="${user.id}">
         <td th:text="${user.name}"></td>
         <td th:text="${user.email}"></td>
         <td><button th:attr="onclick='removerElemento(\'' + ${user.id} + '\');'">Remover</button></td>
@@ -22,6 +22,8 @@
 <br />
 <a th:href="@{/usuario/add}"> Adicionar Usuário</a>
 
+</body>
+</html>
 <script type="text/javascript">
     function removerElemento(element) {
         var opcao = window.confirm("Tem certeza que deseja remover o elemento?");
@@ -34,26 +36,28 @@
     }
 
     function removerElementoAJAX(idUser) {
+
         var httpRequest;
         if (window.XMLHttpRequest) { // Mozilla, Safari, ...
             req = new XMLHttpRequest();
             req.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                  alert("A requisição foi feita com sucesso!");
-                }
-
-                if(this.readyState == 4) {
-                    alert("Voltou a parada");
+                if(this.readyState == 4 && this.status == 204) {
+                    alert("Voltou a requisição com status 204");
+                    //falta adicinar a funcionalidade para remover a linha da tabela
+                    //var e = document.getElementById(idUser);
+                    //alert(e.innerHTML);
+                    //alert(e.childNodes[0]);
+                    //e.removeChild(e.childNodes[0]);
                 }
             };
-            req.open("GET", "localhost:9090/usuario/remover?id=" + idUser + "",true);
-            req.send();
+            //req.open("GET", "localhost:9090/api/usuario/delete?id=" + idUser + "",true);
+            req.open("POST", "http://localhost:9090/api/usuario/delete",true);
+            req.setRequestHeader("Content-Type", "application/json");
+            req.send(JSON.stringify(
+                { "id": idUser }
+            ));
         }
-
-
     }
 
 
 </script>
-</body>
-</html>

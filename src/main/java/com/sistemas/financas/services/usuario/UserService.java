@@ -15,4 +15,8 @@ public class UserService {
         System.out.println("Utiliza a regra de nogócio e salva o usuário no banco ");
         return userRepository.save(u);
     }
+
+    public void deleteById(int id) {
+        userRepository.deleteById(id);
+    }
 }
