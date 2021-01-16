@@ -22,42 +22,6 @@
 <br />
 <a th:href="@{/usuario/add}"> Adicionar Usuário</a>
 
+<script th:src="@{/js/todos-index.js}" type="text/javascript"></script>
 </body>
 </html>
-<script type="text/javascript">
-    function removerElemento(element) {
-        var opcao = window.confirm("Tem certeza que deseja remover o elemento?");
-
-        if(opcao===true) {
-            removerElementoAJAX(element);
-        } else {
-            alert("Elemento não removido");
-        }
-    }
-
-    function removerElementoAJAX(idUser) {
-
-        var httpRequest;
-        if (window.XMLHttpRequest) { // Mozilla, Safari, ...
-            req = new XMLHttpRequest();
-            req.onreadystatechange = function() {
-                if(this.readyState == 4 && this.status == 204) {
-                    alert("Voltou a requisição com status 204");
-                    //falta adicinar a funcionalidade para remover a linha da tabela
-                    //var e = document.getElementById(idUser);
-                    //alert(e.innerHTML);
-                    //alert(e.childNodes[0]);
-                    //e.removeChild(e.childNodes[0]);
-                }
-            };
-            //req.open("GET", "localhost:9090/api/usuario/delete?id=" + idUser + "",true);
-            req.open("POST", "http://localhost:9090/api/usuario/delete",true);
-            req.setRequestHeader("Content-Type", "application/json");
-            req.send(JSON.stringify(
-                { "id": idUser }
-            ));
-        }
-    }
-
-
-</script>
