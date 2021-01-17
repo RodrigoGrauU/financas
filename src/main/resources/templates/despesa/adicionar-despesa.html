@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gastos</title>
+</head>
+<body>
+<h1>Gastos</h1>
+<div>
+    <form th:action="#" method="post">
+        Valor: <input type="text" name="valor" /> <br/>
+        Descrição: <textarea name="descricao"></textarea> <br/>
+        Data: <input type="datetime-local" />
+        <button id="btnSalvar" type="button">Salvar</button>
+    </form>
+</div>
+
+</body>
+</html>
+<script type="text/javascript">
+    var btn = document.getElementById("btnSalvar");
+    function limparCamposFormulario() {
+        var inputs = document.getElementsByTagName("input");
+        inputs[0].value = "";
+        inputs[1].value = "";
+        document.getElementsByTagName("textarea")[0].value = "";
+    }
+
+    var salvarDespesa = function() {
+        var inputs = document.getElementsByTagName("input");
+        var valor = inputs[0].value;
+        var date = inputs[1].value;
+        var descricao = document.getElementsByTagName("textarea")[0].value;
+
+        var despesa = {
+            "valorTransacao": valor,
+            "descricaoTransacao": descricao,
+            "dataTransacao": date
+        };
+
+        var URL = "http://localhost:9090/api/despesa/adicionar";
+        fetch(URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(despesa)
+        })
+        .then(function(response) {
+            console.log(response);
+            if (response.ok) {
+                return response.json();
+            }
+            //limparCamposFormulario();
+        })
+        .then(json => console.log(json))
+        .catch(error => console.error('Error: ',error));
+    }
+
+    btn.addEventListener("click", salvarDespesa);
+
+</script>
