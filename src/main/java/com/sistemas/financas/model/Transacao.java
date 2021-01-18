@@ -1,21 +1,29 @@
 package com.sistemas.financas.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Date;
+import javax.persistence.*;
 
 @Entity
 public class Transacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_transacao")
     private int id;
+
+    @Column(name = "id_tipo")
     private int tipo;
+
+    @Column(name = "id_conta")
     private int idConta;
+
+    @Column(name = "valor_transacao")
     private double valorTransacao;
+
+    @Column(name = "descricao_transacao")
     private String descricaoTransacao;
-    private Date dataTransacao;
+
+    @Column(name = "data_transacao")
+    @Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date dataTransacao;
 
     public int getId() {
         return id;
@@ -49,11 +57,11 @@ public class Transacao {
         this.valorTransacao = valorTransacao;
     }
 
-    public Date getDataTransacao() {
+    public java.util.Date getDataTransacao() {
         return dataTransacao;
     }
 
-    public void setDataTransacao(Date dataTransacao) {
+    public void setDataTransacao(java.util.Date dataTransacao) {
         this.dataTransacao = dataTransacao;
     }
 
