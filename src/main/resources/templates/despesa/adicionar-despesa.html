@@ -11,14 +11,14 @@
     <form action="" method="post">
         Valor: <input type="text" name="valor" /> <br/>
         Descrição: <textarea name="descricao"></textarea> <br/>
-        Data: <input type="datetime-local" />
+        Data: <input type="datetime-local" name="data" maxlength="10" placeholder="Ex.:00/00/0000" />
         <button id="btnSalvar" type="button">Salvar</button>
     </form>
 </div>
 
 </body>
 </html>
-<script type="text/javascript">
+<script type="text/javascript" language="JavaScript">
     var btn = document.getElementById("btnSalvar");
     function limparCamposFormulario() {
         var inputs = document.getElementsByTagName("input");
@@ -58,4 +58,21 @@
 
     btn.addEventListener("click", salvarDespesa);
 
+//Mascara para data
+var inputData = document.getElementsByName("data")[0];
+inputData.addEventListener("keyup", mascaraData);
+function mascaraData() {
+    var data = inputData.value;
+    if(data.length == 2) {
+        data = data + '/';
+        inputData.value = data;
+        return true;
+    }
+
+    if(data.length == 5) {
+        data = data + '/';
+        inputData.value = data;
+        return true;
+    }
+}
 </script>
