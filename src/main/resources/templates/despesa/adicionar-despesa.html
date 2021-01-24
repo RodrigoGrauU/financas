@@ -9,7 +9,7 @@
 <h1>Gastos</h1>
 <div>
     <form action="" method="post">
-        Valor: <input type="text" name="valor" /> <br/>
+        Valor: <input type="text" name="valor" placeholder="Ex.: 13,50"/> <br/>
         Descrição: <textarea name="descricao"></textarea> <br/>
         Data: <input type="datetime-local" name="data" maxlength="10" placeholder="Ex.:00/00/0000" />
         <button id="btnSalvar" type="button">Salvar</button>
@@ -30,7 +30,12 @@
     var salvarDespesa = function() {
         var inputs = document.getElementsByTagName("input");
         var valor = inputs[0].value;
+        valor = valor.replace(",",".");
         var date = inputs[1].value;
+        var day = date.substring(0,2);
+        var month = date.substring(3,5);
+        var year = date.substring(6);
+        date = year + "-" + month + "-" + day;
         var descricao = document.getElementsByTagName("textarea")[0].value;
 
         var despesa = {
@@ -47,10 +52,10 @@
         })
         .then(function(response) {
             console.log(response);
-            if (response.ok) {
+            if (response.ok && response.status == 201) {
+                limparCamposFormulario();
                 return response.json();
             }
-            //limparCamposFormulario();
         })
         .then(json => console.log(json))
         .catch(error => console.error('Error: ',error));
@@ -73,6 +78,19 @@ function mascaraData() {
         data = data + '/';
         inputData.value = data;
         return true;
+    }
+}
+
+//mascara para valor do dinheiro
+var inputMoney = document.getElementsByName("valor")[0];
+inputMoney.addEventListener('keyup', moneyMask);
+
+function moneyMask() {
+    var money = inputMoney.value;
+
+    //substitui o ponto por vírgula
+    if(money.indexOf(".") != -1) {
+        inputMoney.value = money.replace(".", ",");
     }
 }
 </script>
