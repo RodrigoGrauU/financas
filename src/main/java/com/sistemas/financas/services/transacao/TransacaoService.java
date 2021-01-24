@@ -1,4 +1,4 @@
-package com.sistemas.financas.services.usuario;
+package com.sistemas.financas.services.transacao;
 
 import com.sistemas.financas.model.Transacao;
 import com.sistemas.financas.repository.TransacaoRepository;

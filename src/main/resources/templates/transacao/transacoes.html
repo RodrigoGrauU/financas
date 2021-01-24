@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Despesas</title>
+    <title>Transações</title>
 </head>
 <body>
-    <h1>Despesas</h1>
+    <h1>Transações</h1>
     <table>
         <tr>
             <td>Valor</td>
@@ -13,15 +13,15 @@
             <td>Data</td>
             <td></td>
         </tr>
-        <tr th:each="despesa : ${despesas}" th:id="${despesa.id}">
-            <td th:text="${despesa.valorTransacao}"></td>
-            <td th:text="${despesa.descricaoTransacao}"></td>
-            <td th:text="${despesa.dataTransacao}"></td>
-            <td><button th:attr="onclick='removerLinhaDespesa(\'' + ${despesa.id} + '\');'" name="btnRemoveDespesa">Remover</button></td>
+        <tr th:each="transacao : ${transacoes}" th:id="${transacao.id}">
+            <td th:text="${transacao.valorTransacao}"></td>
+            <td th:text="${transacao.descricaoTransacao}"></td>
+            <td th:text="${transacao.dataTransacao}"></td>
+            <td><button th:attr="onclick='removerLinhaTransacao(\'' + ${transacao.id} + '\');'" name="btnRemoveDespesa">Remover</button></td>
         </tr>
     </table> <br/>
 
-    <a th:href="@{/despesa/adicionar}"> Adicionar Despesa</a>
+    <a th:href="@{/transacao/adicionar}"> Adicionar Transação</a>
 
     <script type="text/javascript">
     function limparCamposFormulario() {
@@ -30,13 +30,13 @@
         inputs[1].value = "";
         document.getElementsByTagName("textarea")[0].value = "";
     }
-    function removerLinhaDespesa(idDespesa) {
+    function removerLinhaTransacao(idTransacao) {
         var opcao = window.confirm("Tem certeza que deseja remover o elemento?");
-        (opcao===true) ? removerDespesa(idDespesa) : alert("Elemento não removido");
+        (opcao===true) ? removerTransacao(idTransacao) : alert("Elemento não removido");
     }
 
-    function removerDespesa(id) {
-        var URL = "http://localhost:9090/api/transacao/despesa/remover";
+    function removerTransacao(id) {
+        var URL = "http://localhost:9090/api/transacao/remover";
         fetch(URL, {
             method: 'DELETE',
             headers: { 'Content-Type':'application/json' },

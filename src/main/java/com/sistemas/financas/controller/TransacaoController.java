@@ -8,28 +8,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(path = "/despesa")
-public class DespesaController {
+@RequestMapping(path = "/transacao")
+public class TransacaoController {
 
     ModelAndView modelAndView;
 
     @Autowired
     TransacaoRepository despesas;
 
-    public DespesaController() {
+    public TransacaoController() {
         this.modelAndView = new ModelAndView();
     }
 
     @GetMapping(path ="/adicionar")
-    public ModelAndView adicionarDespesa() {
-        modelAndView.setViewName("/despesa/adicionar-despesa");
+    public ModelAndView adicionarTransacao() {
+        modelAndView.setViewName("/transacao/adiciona-transacao");
         return modelAndView;
     }
 
     @GetMapping(path = {"", "/"})
-    public ModelAndView despesas() {
-        modelAndView.setViewName("/despesa/despesas");
-        modelAndView.addObject("despesas",despesas.findAll());
+    public ModelAndView transacoes() {
+        modelAndView.setViewName("/transacao/transacoes");
+        modelAndView.addObject("transacoes",despesas.findAll());
         return modelAndView;
     }
 }

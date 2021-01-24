@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Gastos</title>
+    <title>Transação</title>
 </head>
 <body>
-<h1>Gastos</h1>
+<h1>Adiciona Transação</h1>
 <div>
     <form action="" method="post">
         Valor: <input type="text" name="valor" placeholder="Ex.: 13,50"/> <br/>
         Descrição: <textarea name="descricao"></textarea> <br/>
         Data: <input type="datetime-local" name="data" maxlength="10" placeholder="Ex.:00/00/0000" />
         <button id="btnSalvar" type="button">Salvar</button>
+
     </form>
 </div>
 
-<a th:href="@{/despesa}"> Lista das Despesas</a>
+<a th:href="@{/transacao}"> Lista das Transações</a>
 </body>
 </html>
 <script type="text/javascript" language="JavaScript">
@@ -45,7 +45,7 @@
             "dataTransacao": date
         };
 
-        var URL = "http://localhost:9090/api/transacao/despesa/adicionar";
+        var URL = "http://localhost:9090/api/transacao/adicionar";
         fetch(URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

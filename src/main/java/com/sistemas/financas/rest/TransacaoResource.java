@@ -1,14 +1,14 @@
 package com.sistemas.financas.rest;
 
 import com.sistemas.financas.model.Transacao;
-import com.sistemas.financas.services.usuario.TransacaoService;
+import com.sistemas.financas.services.transacao.TransacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/api/transacao/despesa")
-public class DespesaResource {
+@RequestMapping(path = "/api/transacao")
+public class TransacaoResource {
     @Autowired
     private TransacaoService transacaoService;
 
@@ -23,8 +23,6 @@ public class DespesaResource {
     @DeleteMapping(path = "remover")
     @ResponseStatus(HttpStatus.OK)
     public void removerDespesa(@RequestBody Transacao despesa) {
-        System.out.println("Entrou no método do service");
-        System.out.println(despesa.getId());
         transacaoService.delete(despesa.getId());
     }
 }
