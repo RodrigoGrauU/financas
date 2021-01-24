@@ -18,4 +18,13 @@ public class DespesaResource {
     public Transacao adicionarDespesa(@RequestBody Transacao despesa) {
         return transacaoService.save(despesa);
     }
+
+    @CrossOrigin //habilita consumo de recurso de forma global
+    @DeleteMapping(path = "remover")
+    @ResponseStatus(HttpStatus.OK)
+    public void removerDespesa(@RequestBody Transacao despesa) {
+        System.out.println("Entrou no método do service");
+        System.out.println(despesa.getId());
+        transacaoService.delete(despesa.getId());
+    }
 }

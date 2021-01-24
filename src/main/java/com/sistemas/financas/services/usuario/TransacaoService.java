@@ -19,4 +19,8 @@ public class TransacaoService {
         t.setIdConta(1);
         return transacaoRepository.save(t);
     }
+
+    public void delete(int id) {
+        transacaoRepository.deleteById(id);
+    }
 }
