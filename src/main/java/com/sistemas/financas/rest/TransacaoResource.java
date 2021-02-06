@@ -25,4 +25,10 @@ public class TransacaoResource {
     public void removerDespesa(@RequestBody Transacao despesa) {
         transacaoService.delete(despesa.getId());
     }
+
+    @PutMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Transacao atualizaTransacao(@PathVariable("id") int id,  @RequestBody Transacao transacao) {
+        return transacaoService.update(id, transacao);
+    }
 }
