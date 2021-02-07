@@ -29,6 +29,8 @@ public class TransacaoResource {
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Transacao atualizaTransacao(@PathVariable("id") int id,  @RequestBody Transacao transacao) {
+        System.out.println(transacao.getValorTransacao());
+        System.out.println(transacao.getTipo());
         return transacaoService.update(id, transacao);
     }
 }

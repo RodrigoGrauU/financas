@@ -24,6 +24,7 @@ public class TransacaoService {
     }
 
     public Transacao update(int id, Transacao transacaoUpdate ) {
+        transacaoUpdate.setIdConta(1); //valor temporário até que se faça a parte para salvar a informação por conta
         Optional<Transacao> transacaoEntity = transacaoRepository.findById(id);
         final Transacao transacao;
 

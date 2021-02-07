@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Transações</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 </head>
 <body>
     <h1>Transações</h1>
@@ -10,45 +11,44 @@
         <tr>
             <td>Valor</td>
             <td>Descrição</td>
+            <td>Tipo</td>
             <td>Data</td>
             <td></td>
+            <td></td> <!-- coluna para botão de alterar transacao -->
         </tr>
         <tr th:each="transacao : ${transacoes}" th:id="${transacao.id}">
-            <td th:text="${transacao.valorTransacao}"></td>
-            <td th:text="${transacao.descricaoTransacao}"></td>
-            <td th:text="${transacao.dataTransacao}"></td>
+            <td th:text="${transacao.valorTransacao}" name="valor"></td>
+            <td th:text="${transacao.descricaoTransacao}" name="transacao" ></td>
+
+            <!-- condicao para os tipos de transacoes -->
+            <td th:value="${transacao.tipo}" th:text="Receita" th:if="${transacao.tipo == 2}" name="tipo"></td>
+            <td th:value="${transacao.tipo}" th:text="Despesa" th:if="${transacao.tipo == 1}" name="tipo"></td>
+
+            <td th:text="${#dates.format(transacao.dataTransacao, 'dd/MM/yyyy')}"></td>
             <td><button th:attr="onclick='removerLinhaTransacao(\'' + ${transacao.id} + '\');'" name="btnRemoveDespesa">Remover</button></td>
+            <!-- <td><button th:attr="onclick='alteraTransacao(\'' + ${transacao.id} + '\');'" >Alterar</button></td> -->
+            <td><a href="#alteraTransacao" th:attr="onclick='formAlteratransacao(\'' + ${transacao.id} + '\');'">Alterar</a>
         </tr>
     </table> <br/>
 
     <a th:href="@{/transacao/adicionar}"> Adicionar Transação</a>
 
-    <script type="text/javascript">
-    function limparCamposFormulario() {
-        var inputs = document.getElementsByTagName("input");
-        inputs[0].value = "";
-        inputs[1].value = "";
-        document.getElementsByTagName("textarea")[0].value = "";
-    }
-    function removerLinhaTransacao(idTransacao) {
-        var opcao = window.confirm("Tem certeza que deseja remover o elemento?");
-        (opcao===true) ? removerTransacao(idTransacao) : alert("Elemento não removido");
-    }
+    <!-- adição do panel para realizar alterações na transação -->
+    <div id="alteraTransacao" class="modal">
+        <div>
+            <a href="#listaTransacoes" title="Fechar" class="fechar">x</a>
+                <form action="" method="post" name="form-atualiza-transacao">
+                Valor:<input type="text" name="valor" /> <br/>
+                Descrição: <textarea name="descricao"></textarea> <br/>
+                Data: <input type="datetime-local" name="data" maxlength="10" placeholder="Ex.:00/00/0000" /> <br/>
+                <select  id="optionsTipoTransacao">
+                    <option th:each="tipoTransacao : ${tiposTransacoes}" th:value="${tipoTransacao.id}" th:text="${tipoTransacao.descricao}" name="tipoTransacao"></option>
+                </select> <br/>
+        <button id="btnSalvar" type="button" >Alterar</button>
+    </form>
+        </div>
+    </div>
 
-    function removerTransacao(id) {
-        var URL = "http://localhost:9090/api/transacao/remover";
-        fetch(URL, {
-            method: 'DELETE',
-            headers: { 'Content-Type':'application/json' },
-            body: JSON.stringify({'id': id })
-        })
-        .then((response) => {
-            if(response.ok && response.status == 200) {
-                //remove linha do elemento removido
-                document.getElementById(id).remove();
-            }
-        })
-    }
-    </script>
+    <script type="text/javascript" th:src="@{/js/transacaoTemplate/scripts.js}"></script>
 </body>
 </html>

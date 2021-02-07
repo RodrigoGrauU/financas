@@ -35,6 +35,7 @@ public class TransacaoController {
     public ModelAndView transacoes() {
         modelAndView.setViewName("/transacao/transacoes");
         modelAndView.addObject("transacoes", transacao.findAll());
+        modelAndView.addObject("tiposTransacoes", tipoTransacaoRepository.findAll());
         return modelAndView;
     }
 }
