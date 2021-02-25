@@ -31,6 +31,7 @@ public class TransacaoResource {
     public Transacao atualizaTransacao(@PathVariable("id") int id,  @RequestBody Transacao transacao) {
         System.out.println(transacao.getValorTransacao());
         System.out.println(transacao.getTipo());
+        System.out.println(transacao.getDataTransacao());
         return transacaoService.update(id, transacao);
     }
 }

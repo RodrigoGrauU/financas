@@ -1,3 +1,9 @@
+    //declaracao de variáveis
+    //Botão que salva as alterações realizadas na transação
+    var btnSalvarAlteracao = document.getElementById("btnSalvarAlteracao");
+    btnSalvarAlteracao.idTransacao = null;
+    btnSalvarAlteracao.addEventListener('click', alteraTransacao);
+
     function limparCamposFormulario() {
         var inputs = document.getElementsByTagName("input");
         inputs[0].value = "";
@@ -25,6 +31,8 @@
     }
 
     function formAlteratransacao(id) {
+        btnSalvarAlteracao.idTransacao = id;
+
         //separando valores
         var informacoesDaTransacao = document.getElementById(id).getElementsByTagName("td");
         var valor = informacoesDaTransacao[0].innerText;
@@ -48,15 +56,23 @@
         };
     }
 
-    function alteraTransacao(id) {  
+    function alteraTransacao(evt) {
+        //pegando o id da transação a partir do currenteTarget
+        var id = evt.currentTarget.idTransacao;
+
         //separando valores
-        var informacoesDaTransacao = document.getElementById(id).getElementsByTagName("td");
-        var valor = informacoesDaTransacao[0].innerText;
-        var descricao = informacoesDaTransacao[1].innerText;
-        var tipo = informacoesDaTransacao[2].getAttribute("value");
-        var date = dateConvertFormat(informacoesDaTransacao[3].innerText);
+        var formularioAtualizacao = document.getElementsByName("form-atualiza-transacao")[0];
+        var valor = formularioAtualizacao.getElementsByTagName("input")[0].value;
+        var descricao = formularioAtualizacao.getElementsByTagName("textarea")[0].value;
+
+        //tratando o select
+        var slct = formularioAtualizacao.getElementsByTagName("select")[0];
+        var tipo = slct.selectedOptions[0].value;
+
+        var date = dateConvertFormat(formularioAtualizacao.getElementsByTagName("input")[1].value);
 
         var transacaoAtualizada = {
+            "id": id,
             "valorTransacao": valor,
             "descricaoTransacao": descricao,
             "dataTransacao": date,
@@ -73,6 +89,8 @@
         .then(response => console.log(response));
 
         console.log(transacaoAtualizada);
+        //fechar label
+        window.location = "#listaTransacoes";
     }
 
     //prepara a data para o padrão utilizado na api
@@ -83,3 +101,8 @@
         date = year + "-" + month + "-" + day;
         return date;
     }
+
+    //função para identificar fechamento de label
+    document.getElementsByClassName("fechar")[0].addEventListener('click', () => {
+        btnSalvarAlteracao.idTransacao = null;
+    } );
