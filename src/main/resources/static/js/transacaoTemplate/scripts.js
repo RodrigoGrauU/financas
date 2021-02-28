@@ -72,7 +72,6 @@
         var date = dateConvertFormat(formularioAtualizacao.getElementsByTagName("input")[1].value);
 
         var transacaoAtualizada = {
-            "id": id,
             "valorTransacao": valor,
             "descricaoTransacao": descricao,
             "dataTransacao": date,

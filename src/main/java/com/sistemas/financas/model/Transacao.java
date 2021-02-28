@@ -1,5 +1,7 @@
 package com.sistemas.financas.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 
 @Entity
@@ -21,8 +23,9 @@ public class Transacao {
     @Column(name = "descricao_transacao")
     private String descricaoTransacao;
 
+    @JsonFormat(pattern="yyyy-MM-dd", timezone="EST")
     @Column(name = "data_transacao")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private java.util.Date dataTransacao;
 
     public int getId() {
