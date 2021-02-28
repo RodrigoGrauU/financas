@@ -85,9 +85,10 @@
             headers: { 'Content-Type':'application/json' },
             body: JSON.stringify(transacaoAtualizada)
         })
-        .then(response => console.log(response));
+        .then(response => {
+            atualizaValoresEmTela(id, transacaoAtualizada);
+        });
 
-        console.log(transacaoAtualizada);
         //fechar label
         window.location = "#listaTransacoes";
     }
@@ -105,3 +106,32 @@
     document.getElementsByClassName("fechar")[0].addEventListener('click', () => {
         btnSalvarAlteracao.idTransacao = null;
     } );
+
+    //realizar consulta
+    function atualizaValoresEmTela(id, jsonObject) {
+        //separando valores
+        var informacoesDaTransacao = document.getElementById(id).getElementsByTagName("td");
+        informacoesDaTransacao[0].innerText = jsonObject.valorTransacao;
+        informacoesDaTransacao[1].innerText = jsonObject.descricaoTransacao;
+        
+        switch(jsonObject.tipo) {
+            case '1':
+            informacoesDaTransacao[2].innerText = 'Despesa';
+            break;
+            
+            case '2':
+            informacoesDaTransacao[2].innerText = 'Receita';
+            break;
+        } 
+        
+        informacoesDaTransacao[3].innerText = dateConvertToBRFormat(jsonObject.dataTransacao);
+    }
+
+    //converte de yyyy-MM-dd para dd-MM-yyyy
+    function dateConvertToBRFormat(date) {
+        var year = date.substring(0,4);
+        var month = date.substring(5,7);
+        var day = date.substring(8);
+        date = day + "/" + month + "/" + year;
+        return date;
+    }
