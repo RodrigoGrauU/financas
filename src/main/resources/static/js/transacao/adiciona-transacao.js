@@ -7,7 +7,8 @@ function limparCamposFormulario() {
 }
 function exibeMensagem() {
     var elementMsg = document.getElementById("alert-msg");
-    elementMsg.innerHTML="<div class=\"alert alert-success alert-dismissible fade show\" role=\"alert\">Despesa adicionada com sucesso!<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" aria-label=\"Close\"></button></div>";
+    var msgAlert = "Transação adicionada com sucesso!";
+    elementMsg.innerHTML="<div class=\"alert alert-success alert-dismissible fade show\" role=\"alert\">" + msgAlert + "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" aria-label=\"Close\"></button></div>";
 
 }
 
