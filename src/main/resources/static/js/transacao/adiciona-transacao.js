@@ -1,0 +1,94 @@
+var btn = document.getElementById("btnSalvar");
+function limparCamposFormulario() {
+    var inputs = document.getElementsByTagName("input");
+    inputs[0].value = "";
+    inputs[1].value = "";
+    document.getElementsByTagName("textarea")[0].value = "";
+}
+
+var salvarDespesa = function() {
+    var inputs = document.getElementsByTagName("input");
+    var valor = inputs[0].value;
+    valor = valor.replace(",",".");
+    var date = inputs[1].value;
+    var day = date.substring(0,2);
+    var month = date.substring(3,5);
+    var year = date.substring(6);
+    date = year + "-" + month + "-" + day;
+    var descricao = document.getElementsByTagName("textarea")[0].value;
+
+
+    var option = document.getElementById('optionsTipoTransacao');
+    var index = option.selectedIndex;
+    console.log("index:" + index);
+    console.log(option.options[index].value);
+
+    var tipoTransacao = document.getElementById('optionsTipoTransacao').options[index].value;
+
+    var transacao = {
+        "valorTransacao": valor,
+        "descricaoTransacao": descricao,
+        "dataTransacao": date,
+        "tipo": tipoTransacao
+    };
+
+    var URL = "http://localhost:9090/api/transacao/adicionar";
+    fetch(URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(transacao)
+    })
+    .then(function(response) {
+        if (response.ok && response.status == 201) {
+            limparCamposFormulario();
+            return response.json();
+        }
+    })
+    .then(json => console.log(json))
+    .catch(error => console.error('Error: ',error));
+}
+
+btn.addEventListener("click", salvarDespesa);
+
+//Mascara para data
+var inputData = document.getElementsByName("data")[0];
+/*inputData.addEventListener("keyup", mascaraData);
+function mascaraData() {
+    var data = inputData.value;
+    if(data.length == 2) {
+        data = data + '/';
+        inputData.value = data;
+        return true;
+    }
+
+    if(data.length == 5) {
+        data = data + '/';
+        inputData.value = data;
+        return true;
+    }
+}*/
+
+//mascara para valor do dinheiro
+/*var inputMoney = document.getElementsByName("valor")[0];
+inputMoney.addEventListener('keyup', moneyMask);
+
+function moneyMask() {
+    var money = inputMoney.value;
+
+    //substitui o ponto por vírgula
+    if(money.indexOf(".") != -1) {
+        inputMoney.value = money.replace(".", ",");
+    }
+}*/
+
+//tratamento para deixar apenas a primeira letra em uppercase
+var tipoTransacao = document.getElementById('optionsTipoTransacao');
+function firstLetterUpperCase() {
+    var tipoTransacao = document.getElementById('optionsTipoTransacao');
+    var i = 0;
+    for(i = 0; i < tipoTransacao.length; i++) {
+      tipoTransacao.options[i].text = tipoTransacao.options[i].text.charAt(0) + tipoTransacao.options[i].text.substring(1).toLowerCase();
+    }
+}
+
+firstLetterUpperCase();
