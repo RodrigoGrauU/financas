@@ -5,16 +5,17 @@ function limparCamposFormulario() {
     inputs[1].value = "";
     document.getElementsByTagName("textarea")[0].value = "";
 }
+function exibeMensagem() {
+    var elementMsg = document.getElementById("alert-msg");
+    elementMsg.innerHTML="<div class=\"alert alert-success alert-dismissible fade show\" role=\"alert\">Despesa adicionada com sucesso!<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" aria-label=\"Close\"></button></div>";
+
+}
 
 var salvarDespesa = function() {
     var inputs = document.getElementsByTagName("input");
     var valor = inputs[0].value;
     valor = valor.replace(",",".");
-    var date = inputs[1].value;
-    var day = date.substring(0,2);
-    var month = date.substring(3,5);
-    var year = date.substring(6);
-    date = year + "-" + month + "-" + day;
+    var date = inputs[1].value; //vem yyyy-MM-dd
     var descricao = document.getElementsByTagName("textarea")[0].value;
 
 
@@ -32,7 +33,7 @@ var salvarDespesa = function() {
         "tipo": tipoTransacao
     };
 
-    var URL = "http://localhost:9090/api/transacao/adicionar";
+    var URL = window.location.origin + "/api/transacao/adicionar";
     fetch(URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -41,6 +42,7 @@ var salvarDespesa = function() {
     .then(function(response) {
         if (response.ok && response.status == 201) {
             limparCamposFormulario();
+            exibeMensagem();
             return response.json();
         }
     })
