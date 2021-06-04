@@ -37,7 +37,6 @@
 		<div class="mb-3">
 			<select  id="optionsTipoTransacao" class="form-select form-select-lg mb-3" aria-describedby="tipoHelp">
         		<option th:each="tipoTransacao : ${tiposTransacoes}" th:value="${tipoTransacao.id}" th:text="${tipoTransacao.descricao}" name="tipoTransacao"></option>
-        		<option>Teste</option>
         	</select>
         	<div id="tipoHelp" class="form-text">Informe o tipo da transação a ser adicionada</div>
 		</div>
