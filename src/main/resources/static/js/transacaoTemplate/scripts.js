@@ -16,7 +16,7 @@
     }
 
     function removerTransacao(id) {
-        var URL = "http://localhost:9090/api/transacao/remover";
+        var URL = window.location.origin + "/api/transacao/remover";
         fetch(URL, {
             method: 'DELETE',
             headers: { 'Content-Type':'application/json' },
@@ -43,7 +43,7 @@
         //adicionando valores no formulário para edição
         document.getElementsByName("form-atualiza-transacao")[0].getElementsByTagName("input")[0].value = valor;
         document.getElementsByName("form-atualiza-transacao")[0].getElementsByTagName("textarea")[0].value = descricao;
-        document.getElementsByName("form-atualiza-transacao")[0].getElementsByTagName("input")[1].value = date;
+        document.getElementsByName("form-atualiza-transacao")[0].getElementsByTagName("input")[1].value = dateConvertFormat(date);
 
         //Tratando a tag select
         var slct = document.getElementById("optionsTipoTransacao");
@@ -69,7 +69,9 @@
         var slct = formularioAtualizacao.getElementsByTagName("select")[0];
         var tipo = slct.selectedOptions[0].value;
 
-        var date = dateConvertFormat(formularioAtualizacao.getElementsByTagName("input")[1].value);
+        //data já vem convertida do frontend
+        //var date = dateConvertFormat(formularioAtualizacao.getElementsByTagName("input")[1].value);
+        var date = formularioAtualizacao.getElementsByTagName("input")[1].value;
 
         var transacaoAtualizada = {
             "valorTransacao": valor,
@@ -78,8 +80,7 @@
             "tipo": tipo
         }
 
-        var URL = "http://localhost:9090/api/transacao/" + id;
-
+        var URL = window.location.origin + "/api/transacao/" + id;
         fetch(URL, {
             method: 'PUT',
             headers: { 'Content-Type':'application/json' },
@@ -102,8 +103,9 @@
         return date;
     }
 
+
     //função para identificar fechamento de label
-    document.getElementsByClassName("fechar")[0].addEventListener('click', () => {
+    document.getElementsByClassName("btn-close")[0].addEventListener('click', () => {
         btnSalvarAlteracao.idTransacao = null;
     } );
 
@@ -117,10 +119,12 @@
         switch(jsonObject.tipo) {
             case '1':
             informacoesDaTransacao[2].innerText = 'Despesa';
+            informacoesDaTransacao[2].setAttribute("value",1);
             break;
             
             case '2':
             informacoesDaTransacao[2].innerText = 'Receita';
+            informacoesDaTransacao[2].setAttribute("value",2);
             break;
         } 
         

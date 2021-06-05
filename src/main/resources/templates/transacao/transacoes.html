@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="pt">
 <head th:replace="/trechos/geral :: head">
     <meta charset="UTF-8">
     <title>Transações</title>
@@ -15,8 +15,7 @@
             <th scope="col">Descrição</th>
             <th scope="col">Tipo</th>
             <th scope="col">Data</th>
-            <th scope="col"></th>
-            <th scope="col"></th> <!-- coluna para botão de alterar transacao -->
+            <th scope="col"></th> <!-- coluna para botões -->
         </thead>
         <tbody>
             <tr th:each="transacao : ${transacoes}" th:id="${transacao.id}">
@@ -28,26 +27,17 @@
                 <td th:value="${transacao.tipo}" th:text="Despesa" th:if="${transacao.tipo == 1}" name="tipo"></td>
 
                 <td th:text="${#dates.format(transacao.dataTransacao, 'dd/MM/yyyy')}"></td>
-                <td><a href="#alteraTransacao" th:attr="onclick='formAlteratransacao(\'' + ${transacao.id} + '\');'" class="btn btn-secondary">Alterar</a>
-                <td><button th:attr="onclick='removerLinhaTransacao(\'' + ${transacao.id} + '\');'" name="btnRemoveDespesa" class="btn btn-danger">Remover</button></td>
+
+                <td>
+                    <a href="#alteraTransacao" th:attr="onclick='formAlteratransacao(\'' + ${transacao.id} + '\');'" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#alteraTransacao">Alterar</a>
+                    <button th:attr="onclick='removerLinhaTransacao(\'' + ${transacao.id} + '\');'" name="btnRemoveDespesa" class="btn btn-danger">Remover</button>
+                </td>
             </tr>
         </tbody>
     </table> <br/>
 
     <!-- adição do panel para realizar alterações na transação -->
-    <div id="alteraTransacao" class="modal">
-        <div>
-            <a href="#listaTransacoes" title="Fechar" class="fechar">x</a>
-            <form action="" method="post" name="form-atualiza-transacao">
-                Valor:<input type="text" name="valor" /> <br/>
-                Descrição: <textarea name="descricao"></textarea> <br/>
-                Data: <input type="datetime-local" name="data" maxlength="10" placeholder="Ex.:00/00/0000" /> <br/>
-                <select  id="optionsTipoTransacao">
-                    <option th:each="tipoTransacao : ${tiposTransacoes}" th:value="${tipoTransacao.id}" th:text="${tipoTransacao.descricao}" name="tipoTransacao"></option>
-                </select> <br/>
-                <button id="btnSalvarAlteracao" type="button" >Alterar</button>
-            </form>
-        </div>
+    <div id="alteraTransacao" th:replace="/trechos/form-altera-transacao :: form-altera">
     </div>
 </div>
 
