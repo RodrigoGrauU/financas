@@ -1,5 +1,6 @@
 package com.sistemas.financas.controller;
 
+import com.sistemas.financas.repository.ContaRepository;
 import com.sistemas.financas.repository.TipoTransacaoRepository;
 import com.sistemas.financas.repository.TransacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class TransacaoController {
     @Autowired
     TipoTransacaoRepository tipoTransacaoRepository;
 
+    @Autowired
+    ContaRepository contaRepository;
+
     public TransacaoController() {
         this.modelAndView = new ModelAndView();
     }
@@ -27,6 +31,7 @@ public class TransacaoController {
     @GetMapping(path ="/adicionar")
     public ModelAndView adicionarTransacao() {
         modelAndView.addObject("tiposTransacoes", tipoTransacaoRepository.findAll());
+        modelAndView.addObject("contas", contaRepository.findAll());
         modelAndView.setViewName("/transacao/adiciona-transacao");
         return modelAndView;
     }

@@ -14,8 +14,6 @@ public class TransacaoService {
     private TransacaoRepository transacaoRepository;
 
     public Transacao save(Transacao t) {
-        //setando conta para unico usuário - ação temporária
-        t.setIdConta(1);
         return transacaoRepository.save(t);
     }
 

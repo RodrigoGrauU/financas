@@ -16,6 +16,13 @@
 	
 
     <form action="" method="post">
+		<div class="mb-3">
+			<label for="data_transcao" class="form-label" >Tipo da Conta</label>
+			<select  id="optionsContas" class="form-select form-select-lg mb-3" aria-describedby="contasHelp">
+				<option th:each="conta : ${contas}" th:value="${conta.id}" th:text="${conta.nome}" name="conta"></option>
+			</select>
+			<div id="contaHelp" class="form-text">Informe a conta a qual a transição ficará associada</div>
+		</div>
     	<div class="mb-3">
 	    	<label for="valor_transacao" class="form-label">Valor</label>
 	    	<input type="text" class="form-control form-control-lg" id="valor_transacao" name="valor" placeholder="Ex.: 13,50" aria-describedby="valorHelp">

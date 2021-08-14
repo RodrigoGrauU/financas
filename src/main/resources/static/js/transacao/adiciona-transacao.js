@@ -27,7 +27,12 @@ var salvarDespesa = function() {
 
     var tipoTransacao = document.getElementById('optionsTipoTransacao').options[index].value;
 
+    //Capturando Id da Conta
+    var indexOptionConta = document.getElementById("optionsContas").selectedIndex;
+    var idConta = document.getElementById("optionsContas").options[indexOptionConta].value;
+
     var transacao = {
+        "idConta": idConta,
         "valorTransacao": valor,
         "descricaoTransacao": descricao,
         "dataTransacao": date,
