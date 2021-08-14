@@ -13,7 +13,7 @@
     </tr>
 
     <tr th:each="user : ${usuarios}" th:id="${user.id}">
-        <td th:text="${user.name}"></td>
+        <td th:text="${user.nome}"></td>
         <td th:text="${user.email}"></td>
         <td><button th:attr="onclick='removerElemento(\'' + ${user.id} + '\');'">Remover</button></td>
     </tr>
