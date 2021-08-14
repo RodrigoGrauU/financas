@@ -29,7 +29,7 @@ public class UserController {
                 "<body>" +
                 "<h1>Adicionar Usuário</h1>" +
                 "<form method=" + '"' + "post" + '"' + ">" +
-                "<input name=" + '"' + "name" + '"' + " /><br/>" +
+                "<input name=" + '"' + "nome" + '"' + " /><br/>" +
                 "<input name=" + '"' + "email" + '"' + " /><br/>" +
                 "<button type=" + '"' + "submit" + '"' + ">Enviar</button>" +
                 "</form>" +
@@ -52,9 +52,9 @@ public class UserController {
         return modelAndView;
     }
     @PostMapping(path = "/add")
-    public String addNewUser (@RequestParam String name, @RequestParam String email) {
+    public String addNewUser (@RequestParam(name = "nome") String name, @RequestParam String email) {
         Usuario u = new Usuario();
-        u.setName(name);
+        u.setNome(name);
         u.setEmail(email);
         userRepository.save(u);
         return "redirect:/usuario/todos";
